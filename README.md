@@ -2,6 +2,8 @@
 ## This is a simple python script to get all the urls of a domain and download all the image files in those urls
 
 Input: website name
+
+
 Output: 
 1. It will fetch all the urls under the domain
 2. It will fetch all the image links under the urls fetched in the previous step.
