@@ -91,3 +91,6 @@ if __name__ == "__main__":
         print(f"{GREEN}The assets of the url {site_url} are: {RESET} \n")
         print(*assets, sep='\n')
         print("\n")
+        print("[+] Total External links:", len(external_urls))
+        print("[+] Total Internal links:", len(internal_urls))
+        print("[+] Total:", len(external_urls) + len(internal_urls))
