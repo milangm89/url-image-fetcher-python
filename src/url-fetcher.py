@@ -8,7 +8,6 @@ from urllib.parse import urlparse, urljoin
 import urllib.error
 import numpy as np
 import colorama
-import wget
 
 # init the colorama module
 colorama.init()
@@ -90,7 +89,6 @@ def getWebsiteAssets(url):
 
 def webassets_downloader(url):
     for site_url in url:
-        # wget.download(site_url)
         print('Download Starting...')
         print(f"{YELLOW}Downloading image: {site_url} {RESET} \n")
         r = requests.get(site_url, verify=False)
