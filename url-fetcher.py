@@ -30,13 +30,18 @@ def fetch(url):
     response = requests.get(url, headers=headers)
     # print(response.content.decode())
     soup = BeautifulSoup(response.text, 'html.parser')
-
     assets = []
     for img in soup.findAll('img'):
+        if not is_valid(img.get('src')):
+            # not a valid URL
+            continue
         assets.append(img.get('src'))
     print("\n")
     links = []
     for link in soup.find_all(attrs={'href': re.compile("http")}):
+        if not is_valid(link.get('href')):
+            # not a valid URL
+            continue
         links.append(link.get('href'))
     print("\n")
     
@@ -71,14 +76,11 @@ def getWebsiteAssets(url):
         if domain_name not in href:
             # external link
             if href not in external_urls:
-                # print(f"{GRAY}[!] External link: {href}{RESET}")
                 external_urls.add(href)
             continue
-        # print(f"{GREEN}[*] Internal link: {href}{RESET}")
         urls.add(href)
         internal_urls.add(href)
-    # return urls
-    # return internal_urls
+    return urls
 
 if __name__ == "__main__":
     site = 'https://bgr.in'
