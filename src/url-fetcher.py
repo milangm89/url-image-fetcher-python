@@ -85,12 +85,11 @@ def getWebsiteAssets(url):
 if __name__ == "__main__":
     site = 'https://bgr.in'
     getWebsiteAssets(site)
-    print("\n")
+    print("\n")    
     for site_url in internal_urls:
         assets,links = fetch(site_url)
         print(f"{GREEN}The assets of the url {site_url} are: {RESET} \n")
         print(*assets, sep='\n')
+        print("[+] Total assets:", len(assets))
         print("\n")
-        print("[+] Total External links:", len(external_urls))
-        print("[+] Total Internal links:", len(internal_urls))
-        print("[+] Total:", len(external_urls) + len(internal_urls))
+        
