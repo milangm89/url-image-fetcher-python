@@ -93,7 +93,7 @@ def webassets_downloader(url):
         # wget.download(site_url)
         print('Download Starting...')
         print(f"{YELLOW}Downloading image: {site_url} {RESET} \n")
-        r = requests.get(site_url)
+        r = requests.get(site_url, verify=False)
         print(r)
         filename = site_url.split('/')[-1] # this will take only -1 splitted part of the url
         with open(filename,'wb') as output_file:
@@ -101,7 +101,7 @@ def webassets_downloader(url):
         print('Download Completed!!!')
 
 if __name__ == "__main__":
-    site = 'https://www.manoramaonline.com'
+    site = 'https://www.bgr.in'
     getWebsiteAssets(site)
     print("\n")
     for site_url in internal_urls:
