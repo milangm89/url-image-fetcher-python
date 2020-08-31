@@ -23,5 +23,7 @@ Run the file by using the below command:
 
 I have added the site "bgr.in" in the function main for an example.
 
-```if __name__ == "__main__":
-    site = 'https://www.manoramaonline.com'```
+```
+if __name__ == "__main__":
+    site = 'https://www.bgr.in'
+```

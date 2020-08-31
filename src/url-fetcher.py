@@ -104,12 +104,12 @@ if __name__ == "__main__":
     site = 'https://www.manoramaonline.com'
     getWebsiteAssets(site)
     print("\n")
-    # for site_url in internal_urls:
-    #     assets,links = fetch(site_url)
-    #     print(f"{GREEN}Url: {site_url} \nAssets are as follows: {RESET} \n")
-    #     print(*assets, sep='\n')
-    #     print("[+] Total assets:", len(assets))
-    #     print("\n")
+    for site_url in internal_urls:
+        assets,links = fetch(site_url)
+        print(f"{GREEN}Url: {site_url} \nAssets are as follows: {RESET} \n")
+        print(*assets, sep='\n')
+        print("[+] Total assets:", len(assets))
+        print("\n")
     for site_url in internal_urls:
         assets,links = fetch(site_url)
         webassets_downloader(assets)
