@@ -8,10 +8,12 @@ from urllib.parse import urlparse, urljoin
 import urllib.error
 import numpy as np
 import colorama
+import wget
 
 # init the colorama module
 colorama.init()
 GREEN = colorama.Fore.GREEN
+YELLOW = colorama.Fore.YELLOW
 GRAY = colorama.Fore.LIGHTBLACK_EX
 RESET = colorama.Fore.RESET
 
@@ -86,17 +88,29 @@ def getWebsiteAssets(url):
         internal_urls.add(href)
     return urls
 
-# def webassets_downloader(url):
-
+def webassets_downloader(url):
+    for site_url in url:
+        # wget.download(site_url)
+        print('Download Starting...')
+        print(f"{YELLOW}Downloading image: {site_url} {RESET} \n")
+        r = requests.get(site_url)
+        print(r)
+        filename = site_url.split('/')[-1] # this will take only -1 splitted part of the url
+        with open(filename,'wb') as output_file:
+            output_file.write(r.content)
+        print('Download Completed!!!')
 
 if __name__ == "__main__":
     site = 'https://www.manoramaonline.com'
     getWebsiteAssets(site)
-    print("\n")    
+    print("\n")
+    # for site_url in internal_urls:
+    #     assets,links = fetch(site_url)
+    #     print(f"{GREEN}Url: {site_url} \nAssets are as follows: {RESET} \n")
+    #     print(*assets, sep='\n')
+    #     print("[+] Total assets:", len(assets))
+    #     print("\n")
     for site_url in internal_urls:
         assets,links = fetch(site_url)
-        print(f"{GREEN}Url: {site_url} \nAssets are as follows: {RESET} \n")
-        print(*assets, sep='\n')
-        print("[+] Total assets:", len(assets))
+        webassets_downloader(assets)
         print("\n")
-        
