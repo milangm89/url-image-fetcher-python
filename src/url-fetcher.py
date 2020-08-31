@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from urllib.parse import urlparse, urljoin
+import urllib.error
 import numpy as np
 import colorama
 
@@ -26,26 +27,29 @@ def is_valid(url):
     return bool(parsed.netloc) and bool(parsed.scheme)
 
 def fetch(url):
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
-    response = requests.get(url, headers=headers)
-    # print(response.content.decode())
-    soup = BeautifulSoup(response.text, 'html.parser')
-    assets = []
-    for img in soup.findAll('img'):
-        if not is_valid(img.get('src')):
-            # not a valid URL
-            continue
-        assets.append(img.get('src'))
-    print("\n")
-    links = []
-    for link in soup.find_all(attrs={'href': re.compile("http")}):
-        if not is_valid(link.get('href')):
-            # not a valid URL
-            continue
-        links.append(link.get('href'))
-    print("\n")
-    
-    return(assets,links)
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+        response = requests.get(url, headers=headers)
+        # print(response.content.decode())
+        soup = BeautifulSoup(response.text, 'html.parser')
+        assets = []
+        for img in soup.findAll('img'):
+            if not is_valid(img.get('src')):
+                # not a valid URL
+                continue
+            assets.append(img.get('src'))
+        print("\n")
+        links = []
+        for link in soup.find_all(attrs={'href': re.compile("http")}):
+            if not is_valid(link.get('href')):
+                # not a valid URL
+                continue
+            links.append(link.get('href'))
+        print("\n")
+        
+        return(assets,links)
+    except urllib.error.HTTPError as e:
+        urlList.append( e )
 
 def getWebsiteAssets(url):
     """
@@ -82,13 +86,16 @@ def getWebsiteAssets(url):
         internal_urls.add(href)
     return urls
 
+# def webassets_downloader(url):
+
+
 if __name__ == "__main__":
-    site = 'https://bgr.in'
+    site = 'https://www.manoramaonline.com'
     getWebsiteAssets(site)
     print("\n")    
     for site_url in internal_urls:
         assets,links = fetch(site_url)
-        print(f"{GREEN}The assets of the url {site_url} are: {RESET} \n")
+        print(f"{GREEN}Url: {site_url} \nAssets are as follows: {RESET} \n")
         print(*assets, sep='\n')
         print("[+] Total assets:", len(assets))
         print("\n")
